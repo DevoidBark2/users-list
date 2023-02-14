@@ -1,0 +1,34 @@
+.search-users{
+    background: #FFFFFF;
+    margin-top: 20px;
+    padding: 12px 44px 16px 16px;
+    box-shadow: 0 18px 15px rgba(148, 148, 148, 0.15);
+    border-radius: 7px;
+}
+.search-input-block{
+    position: relative;
+}
+.search{
+    position: absolute;
+    left: 3px;
+    top:5px;
+}
+.search-input{
+    width: 100%;
+    background: rgba(236, 239, 240, 1);
+    border-radius: 4px;
+    border: none;
+    padding-left: 31px;
+    padding-top: 9px;
+    padding-bottom: 9px;
+}
+
+.clean-filter-block{
+    display: flex;
+    align-items: center;
+    margin-top: 24px;
+}
+.clean-filter{
+    margin-left: 6px;
+    color: #4F4F4F;
+}

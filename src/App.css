@@ -1,3 +1,9 @@
 .container{
     margin: 12px 12px 0 27px;
 }
+.main-title{
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 28px;
+    color: #333333;
+}
