@@ -1,13 +1,35 @@
-import React from "react";
+import React, {useState} from "react";
 import "./UsersList.css";
-import cancel from '../../images/cancel.svg';
-export const UsersList = () =>{
+import {Modal} from "../../UI/Modal/Modal";
+import {User} from "../User/User";
+import {Pagination} from "../../UI/Pagination/Pagination";
+export const UsersList = ({users,searchValue}) =>{
+    const [modalActive,setModalActive] = useState(false);
+    const [currentPage,setCurrentPage] = useState(1);
+    const [usersPerPage] = useState(5);
+    const allUsers = users.filter(user => {
+        return user.username.toLowerCase().includes(searchValue.toLowerCase()) ||
+            user.email.toLowerCase().includes(searchValue.toLowerCase());
+
+    }).map(user => (<User user={user} setModalActive={setModalActive}/>))
+    const lastUserIndex = currentPage * usersPerPage;
+    const firstUserIndex = lastUserIndex - usersPerPage;
+    const currentUser = allUsers.slice(firstUserIndex,lastUserIndex);
+    const handlePagination = pageNumber =>setCurrentPage(pageNumber)
     return(
         <div className="users-list-block">
-            <div className="sort-users-block">
-                <p className="sort-title">Сортировка:</p>
-                <p className="sort-item active">Дата регистрации</p>
-                <p className="sort-item">Рейтинг</p>
+            <div className="sort-block">
+                <div className="sort-users-block">
+                    <p className="sort-title">Сортировка:</p>
+                    <p className="sort-item">Дата регистрации</p>
+                    <p className="sort-item">Рейтинг</p>
+                </div>
+                <Pagination
+                    usersPerPage={usersPerPage}
+                    totalUser={allUsers.length}
+                    handlePagination={handlePagination}
+                    currentPage={currentPage}
+                />
             </div>
             <div className="users-list">
                 <table className="table">
@@ -20,23 +42,11 @@ export const UsersList = () =>{
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Username</td>
-                            <td>test@test.ru</td>
-                            <td>23.09.19</td>
-                            <td>12</td>
-                            <td><img src={cancel} alt="cancel"/></td>
-                        </tr>
-                        <tr>
-                            <td>Username</td>
-                            <td>test@test.ru</td>
-                            <td>23.09.19</td>
-                            <td>12</td>
-                            <td><img src={cancel} alt="cancel"/></td>
-                        </tr>
+                    {currentUser}
                     </tbody>
                 </table>
             </div>
+            <Modal active={modalActive} setActive={setModalActive}/>
         </div>
     )
 }

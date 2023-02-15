@@ -27,6 +27,16 @@
     display: flex;
     align-items: center;
     margin-top: 24px;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+    color: #4F4F4F;
+}
+.clean-filter-block:hover{
+    cursor: pointer;
+}
+.not-active-clen-block{
+    display: none;
 }
 .clean-filter{
     margin-left: 6px;

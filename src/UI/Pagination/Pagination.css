@@ -1,0 +1,15 @@
+.pagination{
+    display: flex;
+    width: 300px;
+    justify-content: space-between;
+    list-style: none;
+}
+.page-link{
+    background: grey;
+    color:white;
+    padding: 5px;
+}
+.active{
+    background: #333333;
+    color:white;
+}
