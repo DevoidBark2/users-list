@@ -1,15 +1,34 @@
 .pagination{
+    width: 200px;
     display: flex;
-    width: 300px;
+    align-items: center;
     justify-content: space-between;
+    margin-right: 50px;
     list-style: none;
 }
 .page-link{
     background: grey;
     color:white;
-    padding: 5px;
+    padding: 6px;
 }
-.active{
-    background: #333333;
+.page-link:hover{
+    cursor: pointer;
+}
+.active-page{
+    background-color: #333333;
     color:white;
+}
+.arrow{
+    width: 20px;
+    height: 20px;
+}
+.arrow-block{
+    border: none;
+    background: transparent;
+}
+.arrow-block:hover{
+    cursor: pointer;
+}
+.not-active{
+    color:gray;
 }

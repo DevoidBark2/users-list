@@ -92,3 +92,6 @@ tbody>tr>td:first-child{
     font-size: 12px;
     line-height: 16px;
 }
+.active-sort-item{
+    color:black;
+}
