@@ -23,7 +23,9 @@ export const Pagination = ({usersPerPage,totalUser,handlePagination,currentPage,
     return(
         <ul className="pagination">
             <button disabled={currentPage === 1} className="arrow-block">
-                <img className={`arrow ${notActiveArrow ? 'not-active' : ''}`} src={left} alt="left"  onClick={prevPage}/>
+                <img className={`arrow ${notActiveArrow ? 'not-active' : ''}`}
+                     src={left} alt="left"  onClick={prevPage}
+                />
             </button>
             {pageNumbers.map(num =>(
                 <li
@@ -35,7 +37,9 @@ export const Pagination = ({usersPerPage,totalUser,handlePagination,currentPage,
                 </li>
             ))}
             <button disabled={currentPage === pageNumbers.length} className="arrow-block">
-                <img className={`arrow ${notActiveArrow ? 'not-active' : ''}`} src={right} alt="right" onClick={nextPage}/>
+                <img className={`arrow ${notActiveArrow ? 'not-active' : ''}`} src={right}
+                     alt="right" onClick={nextPage}
+                />
             </button>
         </ul>
     )

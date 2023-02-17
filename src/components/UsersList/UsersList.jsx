@@ -1,60 +1,45 @@
 import React, {useState} from "react";
 import "./UsersList.css";
-import {Modal} from "../../UI/Modal/Modal";
 import {User} from "../User/User";
 import {Pagination} from "../../UI/Pagination/Pagination";
 
-export const UsersList = ({users,searchValue,setOpenCLearFilter,typeSort,setTypeSort}) =>{
-    const [modalActive,setModalActive] = useState(false);
+export const UsersList = (
+    {setUsers,users,searchValue,setOpenClearFilter,typeSort,setTypeSort,
+        setActiveFilterRating,setActiveFilterDate,activeFilterRating,activeFilterDate
+    }) =>{
     const [currentPage,setCurrentPage] = useState(1);
-    const [activeFilterDate,setActiveFilterDate] = useState(false)
-    const [activeFilterRating,setActiveFilterRating] = useState(false)
+    const [usersPerPage] = useState(5);
     const [directionSortRating,setDirectionSortRating] = useState(true)
     const [directionSortDate,setDirectionSortDate] = useState(true)
-    const [usersPerPage] = useState(5);
-    const allUsers = users.sort((a,b) => typeSort === 'rating' ? a.rating - b.rating :
-        typeSort === 'reverse-rating' ? b.rating - a.rating :
-        typeSort === 'date' ? Date.parse(a.registration_date) - Date.parse(b.registration_date) :
-        typeSort === 'reverse-date' ? Date.parse(b.registration_date) - Date.parse(a.registration_date) : a.id - b.id).
-        filter(user => {
+    const allUsers = users.sort((a,b) =>
+        typeSort === 'rating' ? b.rating - a.rating :
+        typeSort === 'reverse-rating' ? a.rating - b.rating :
+        typeSort === 'date' ? Date.parse(b.registration_date) - Date.parse(a.registration_date) :
+        typeSort === 'reverse-date' ? Date.parse(a.registration_date) - Date.parse(b.registration_date) :
+        a.id - b.id)
+        .filter(user => {
             return user.username.toLowerCase().includes(searchValue.toLowerCase()) ||
                 user.email.toLowerCase().includes(searchValue.toLowerCase());
-
-        }).map(user => (<User key={user.id} user={user} setModalActive={setModalActive}/>))
-
+        }).map(user => (<User key={user.id}  user={user} setUsers={setUsers}/>))
     const lastUserIndex = currentPage * usersPerPage;
     const firstUserIndex = lastUserIndex - usersPerPage;
-    let currentUser = allUsers.slice(firstUserIndex,lastUserIndex);
+    let currentUsers = allUsers.slice(firstUserIndex,lastUserIndex);
     const handlePagination = pageNumber =>setCurrentPage(pageNumber);
-    const sortByDate = (type) =>{
-        setActiveFilterRating(false);
-        if(directionSortDate){
-            setTypeSort(type)
+    const sortUsers = (type,sort) =>{
+        if(sort === 1){
+            setActiveFilterRating(false);
             setActiveFilterDate(true)
             setDirectionSortDate(!directionSortDate)
-            setOpenCLearFilter(true);
-        }
-        else{
-            setTypeSort(`reverse-${type}`)
-            setActiveFilterDate(true);
-            setDirectionSortDate(!directionSortDate)
-            setOpenCLearFilter(true);
-        }
-
-    }
-    const sortByRating = (type) =>{
-        setActiveFilterDate(false);
-        if(directionSortRating){
-            setTypeSort(type);
+            setOpenClearFilter(true);
+            if(directionSortDate) setTypeSort(type)
+            else setTypeSort(`reverse-${type}`)
+        }else{
+            setActiveFilterDate(false);
             setActiveFilterRating(true);
             setDirectionSortRating(!directionSortRating)
-            setOpenCLearFilter(true);
-        }
-        else{
-            setTypeSort(`reverse-${type}`)
-            setActiveFilterRating(true);
-            setDirectionSortRating(!directionSortRating)
-            setOpenCLearFilter(true);
+            setOpenClearFilter(true);
+            if(directionSortRating) setTypeSort(type)
+            else setTypeSort(`reverse-${type}`)
         }
     }
     return(
@@ -62,8 +47,12 @@ export const UsersList = ({users,searchValue,setOpenCLearFilter,typeSort,setType
             <div className="sort-block">
                 <div className="sort-users-block">
                     <p className="sort-title">Сортировка:</p>
-                    <p className={`${activeFilterDate ? 'sort-item active-sort-item' : 'sort-item'}`} onClick={() => sortByDate('date')}>Дата регистрации</p>
-                    <p className={`${activeFilterRating  ? 'sort-item active-sort-item' : 'sort-item'}`} onClick={() => sortByRating('rating')}>Рейтинг</p>
+                    <p className={`${activeFilterDate ? 'sort-item active-sort-item' : 'sort-item'}`}
+                       onClick={() => sortUsers('date',1)}>Дата регистрации
+                    </p>
+                    <p className={`${activeFilterRating  ? 'sort-item active-sort-item' : 'sort-item'}`}
+                       onClick={() => sortUsers('rating',2)}>Рейтинг
+                    </p>
                 </div>
                 <Pagination
                     usersPerPage={usersPerPage}
@@ -81,11 +70,10 @@ export const UsersList = ({users,searchValue,setOpenCLearFilter,typeSort,setType
                             <th>E-mail</th>
                             <th>Дата регистрации</th>
                             <th>Рейтинг</th>
-                            <Modal active={modalActive} setActive={setModalActive}/>
                         </tr>
                     </thead>
                     <tbody>
-                    {currentUser}
+                    {currentUsers}
                     </tbody>
                 </table>
             </div>

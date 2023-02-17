@@ -2,16 +2,20 @@ import React from "react";
 import "./SearchUsers.css";
 import clean from '../../images/clean.svg';
 import search from '../../images/search.svg';
-export const SearchUsers = ({searchValue,setSearchValue,openClearFilter,setOpenClearFilter,setTypeSort}) =>{
-
-    const handleChange = (event) =>{
-        setSearchValue(event.target.value);
-        setOpenClearFilter(true);
+export const SearchUsers = (
+    {searchValue,setSearchValue,openClearFilter,setOpenClearFilter,
+        setTypeSort,setActiveFilterRating,setActiveFilterDate
+    }) =>{
+    const handleChange = event =>{
+        setSearchValue(event.target.value)
+        setOpenClearFilter(true)
     }
     const handleCLick = () =>{
         setSearchValue('')
         setOpenClearFilter(false)
         setTypeSort('')
+        setActiveFilterRating(false)
+        setActiveFilterDate(false)
     }
     return(
         <div className="search-users">
